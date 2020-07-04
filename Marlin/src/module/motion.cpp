@@ -80,7 +80,7 @@
   #define XYZ_CONSTS(T, NAME, OPT) const PROGMEM XYZEval<T> NAME##_P = { X_##OPT, Y_##OPT, Z_##OPT }
 #endif
 
-XYZ_CONSTS(float, base_min_pos,   MIN_POS); //Tobbe seems to be old marlin code
+XYZ_CONSTS(float, base_min_pos,   MIN_POS); //Tobbe seems to be old marlin code. Code is also in motion.h line 139. Why?
 XYZ_CONSTS(float, base_max_pos,   MAX_POS);
 XYZ_CONSTS(float, base_home_pos,  HOME_POS);
 XYZ_CONSTS(float, max_length,     MAX_LENGTH);
