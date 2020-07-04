@@ -507,8 +507,8 @@
   #error "ORIG_CHAMBER_AUTO_FAN_PIN is now just CHAMBER_AUTO_FAN_PIN. Make sure your pins are up to date."
 #elif defined(HOMING_BACKOFF_MM)
   #error "HOMING_BACKOFF_MM is now HOMING_BACKOFF_POST_MM. Please update Configuration_adv.h."
-#elif defined(X_HOME_BUMP_MM) || defined(Y_HOME_BUMP_MM) || defined(Z_HOME_BUMP_MM)
-  #error "[XYZ]_HOME_BUMP_MM is now HOMING_BUMP_MM. Please update Configuration_adv.h."
+//#elif defined(X_HOME_BUMP_MM) || defined(Y_HOME_BUMP_MM) || defined(Z_HOME_BUMP_MM) //Tobbe
+//  #error "[XYZ]_HOME_BUMP_MM is now HOMING_BUMP_MM. Please update Configuration_adv.h." //Tobbe
 #elif defined(DIGIPOT_I2C)
   #error "DIGIPOT_I2C is now DIGIPOT_MCP4451 (or DIGIPOT_MCP4018). Please update Configuration_adv.h."
 #endif
@@ -1911,8 +1911,14 @@ static_assert(hbm[Z_AXIS] >= 0, "HOMING_BUMP_MM.Z must be greater than or equal 
   #elif Y_HOME_DIR > 0 && DISABLED(USE_YMAX_PLUG)
     #error "Enable USE_YMAX_PLUG when homing Y to MAX."
   #endif
+  #if ENABLED(E_AXIS_HOMING)
+    #if E_HOME_DIR < 0 && DISABLED(USE_EMIN_PLUG)
+      #error "Enable USE_EMIN_PLUG when homing E to MIN."
+    #elif E_HOME_DIR > 0 && DISABLED(USE_EMAX_PLUG)
+      #error "Enable USE_EMAX_PLUG when homing E to MAX."
+    #endif
+  #endif
 #endif
-
 // Z homing direction and plug usage flags
 #if Z_HOME_DIR < 0 && NONE(USE_ZMIN_PLUG, HOMING_Z_WITH_PROBE)
   #error "Enable USE_ZMIN_PLUG when homing Z to MIN."

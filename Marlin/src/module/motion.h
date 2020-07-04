@@ -36,7 +36,11 @@
 
 // Axis homed and known-position states
 extern uint8_t axis_homed, axis_known_position;
-constexpr uint8_t xyz_bits = _BV(X_AXIS) | _BV(Y_AXIS) | _BV(Z_AXIS);
+constexpr uint8_t xyz_bits = _BV(X_AXIS) | _BV(Y_AXIS) | _BV(Z_AXIS)
+  #if ENABLED(E_AXIS_HOMING)
+    | _BV(E_AXIS)
+  #endif
+;
 FORCE_INLINE bool no_axes_homed() { return !axis_homed; }
 FORCE_INLINE bool all_axes_homed() { return (axis_homed & xyz_bits) == xyz_bits; }
 FORCE_INLINE bool all_axes_known() { return (axis_known_position & xyz_bits) == xyz_bits; }
@@ -58,11 +62,15 @@ extern xyze_pos_t current_position,  // High-level current tool position
 // G60/G61 Position Save and Return
 #if SAVED_POSITIONS
   extern uint8_t saved_slots[(SAVED_POSITIONS + 7) >> 3];
-  extern xyz_pos_t stored_position[SAVED_POSITIONS];
+  extern xyze_pos_t stored_position[SAVED_POSITIONS];
 #endif
 
 // Scratch space for a cartesian result
-extern xyz_pos_t cartes;
+#if ENABLED(E_AXIS_HOMING)
+  extern xyze_pos_t cartes;
+#else
+  extern xyz_pos_t cartes;
+#endif
 
 // Until kinematics.cpp is created, declare this here
 #if IS_KINEMATIC
@@ -86,7 +94,11 @@ extern xyz_pos_t cartes;
  * Feed rates are often configured with mm/m
  * but the planner and stepper like mm/s units.
  */
+#if ENABLED(E_AXIS_HOMING)
+extern const feedRate_t homing_feedrate_mm_s[XYZE];
+#else
 extern const feedRate_t homing_feedrate_mm_s[XYZ];
+#endif
 FORCE_INLINE feedRate_t homing_feedrate(const AxisEnum a) { return pgm_read_float(&homing_feedrate_mm_s[a]); }
 feedRate_t get_homing_bump_feedrate(const AxisEnum axis);
 
@@ -100,6 +112,9 @@ extern int16_t feedrate_percentage;
 // The active extruder (tool). Set with T<extruder> command.
 #if EXTRUDERS > 1
   extern uint8_t active_extruder;
+  #if ENABLED(E_AXIS_HOMING)
+    extern float  extruder_position[EXTRUDERS];
+  #endif
 #else
   constexpr uint8_t active_extruder = 0;
 #endif
@@ -110,12 +125,17 @@ extern int16_t feedrate_percentage;
 
 inline float pgm_read_any(const float *p) { return pgm_read_float(p); }
 inline signed char pgm_read_any(const signed char *p) { return pgm_read_byte(p); }
-
+#if ENABLED(E_AXIS_HOMING)
+  #define XYZ_DEFS(T, NAME, OPT) \
+    extern const XYZEval<T> NAME##_P; \
+    FORCE_INLINE T NAME(AxisEnum axis) { return pgm_read_any(&NAME##_P[axis]); }
+#else
 #define XYZ_DEFS(T, NAME, OPT) \
   inline T NAME(const AxisEnum axis) { \
     static const XYZval<T> NAME##_P PROGMEM = { X_##OPT, Y_##OPT, Z_##OPT }; \
     return pgm_read_any(&NAME##_P[axis]); \
   }
+#endif
 XYZ_DEFS(float, base_min_pos,   MIN_POS);
 XYZ_DEFS(float, base_max_pos,   MAX_POS);
 XYZ_DEFS(float, base_home_pos,  HOME_POS);
@@ -141,16 +161,23 @@ inline float home_bump_mm(const AxisEnum axis) {
 #else
   constexpr xyz_pos_t hotend_offset[1] = { { 0 } };
 #endif
-
-typedef struct { xyz_pos_t min, max; } axis_limits_t;
+#if ENABLED(E_AXIS_HOMING)
+  typedef struct { xyze_pos_t min, max; } axis_limits_t;
+#else
+  typedef struct { xyz_pos_t min, max; } axis_limits_t;
+#endif
 #if HAS_SOFTWARE_ENDSTOPS
   extern bool soft_endstops_enabled;
   extern axis_limits_t soft_endstop;
-  void apply_motion_limits(xyz_pos_t &target);
+  #if ENABLED(E_AXIS_HOMING)
+    void apply_motion_limits(xyze_pos_t &target);
+  #else
+    void apply_motion_limits(xyz_pos_t &target);
+  #endif
   void update_software_endstops(const AxisEnum axis
-    #if HAS_HOTEND_OFFSET
-      , const uint8_t old_tool_index=0, const uint8_t new_tool_index=0
-    #endif
+  #if HAS_HOTEND_OFFSET
+    , const uint8_t old_tool_index=0, const uint8_t new_tool_index=0
+  #endif
   );
   #define TEMPORARY_SOFT_ENDSTOP_STATE(enable) REMEMBER(tes, soft_endstops_enabled, enable);
 #else
@@ -237,10 +264,13 @@ void restore_feedrate_and_scaling();
 //
 // Homing
 //
-
-uint8_t axes_need_homing(uint8_t axis_bits=0x07);
-bool axis_unhomed_error(uint8_t axis_bits=0x07);
-
+#if ENABLED(E_AXIS_HOMING)
+  uint8_t axes_need_homing(uint8_t axis_bits=0xf); // Binary(0xf) = 1111. This bit mask means "all 4 axes: yes"
+  bool axis_unhomed_error(uint8_t axis_bits=0xf); // Binary(0xf) = 1111. This bit mask means "all 4 axes: yes"
+#else
+  uint8_t axes_need_homing(uint8_t axis_bits=0x07); // Binary(0x07) = 111. This bit mask means "all 3 axes: yes"
+  bool axis_unhomed_error(uint8_t axis_bits=0x07); // Binary(0x07) = 111. This bit mask means "all 3 axes: yes"
+#endif
 #if ENABLED(NO_MOTION_BEFORE_HOMING)
   #define MOTION_CONDITIONS (IsRunning() && !axis_unhomed_error())
 #else
@@ -258,13 +288,25 @@ void homeaxis(const AxisEnum axis);
  */
 #if HAS_HOME_OFFSET || HAS_POSITION_SHIFT
   #if HAS_HOME_OFFSET
-    extern xyz_pos_t home_offset;
+    #if ENABLED(E_AXIS_HOMING)
+      extern xyze_pos_t home_offset;
+    #else
+      extern xyz_pos_t home_offset;
+    #endif
   #endif
   #if HAS_POSITION_SHIFT
-    extern xyz_pos_t position_shift;
+    #if ENABLED(E_AXIS_HOMING)
+      extern xyze_pos_t position_shift;
+    #else
+      extern xyz_pos_t position_shift;
+    #endif
   #endif
   #if HAS_HOME_OFFSET && HAS_POSITION_SHIFT
-    extern xyz_pos_t workspace_offset;
+    #if ENABLED(E_AXIS_HOMING)
+      extern xyze_pos_t workspace_offset;
+    #else
+      extern xyz_pos_t workspace_offset;
+    #endif
     #define _WS workspace_offset
   #elif HAS_HOME_OFFSET
     #define _WS home_offset
@@ -295,7 +337,10 @@ void homeaxis(const AxisEnum axis);
 #define RAW_X_POSITION(POS)     LOGICAL_TO_NATIVE(POS, X_AXIS)
 #define RAW_Y_POSITION(POS)     LOGICAL_TO_NATIVE(POS, Y_AXIS)
 #define RAW_Z_POSITION(POS)     LOGICAL_TO_NATIVE(POS, Z_AXIS)
-
+#if ENABLED(E_AXIS_HOMING)
+  #define LOGICAL_E_POSITION(POS) NATIVE_TO_LOGICAL(POS, E_AXIS)
+  #define RAW_E_POSITION(POS)     LOGICAL_TO_NATIVE(POS, E_AXIS)
+#endif
 /**
  * position_is_reachable family of functions
  */

@@ -315,7 +315,13 @@ void GcodeSuite::G28() {
                needX = homeZ && TERN0(Z_SAFE_HOMING, axes_need_homing(_BV(X_AXIS))),
                needY = homeZ && TERN0(Z_SAFE_HOMING, axes_need_homing(_BV(Y_AXIS))),
                homeX = needX || parser.seen('X'), homeY = needY || parser.seen('Y'),
+		#if ENABLED(E_AXIS_HOMING)
+          homeE = parser.seen('E'),
+          home_all = homeX == homeY && homeX == homeZ && homeX == homeE,
+          doE = home_all || homeE,
+        #else
                home_all = homeX == homeY && homeX == homeZ, // All or None
+		#endif	   
                doX = home_all || homeX, doY = home_all || homeY, doZ = home_all || homeZ;
 
     destination = current_position;
@@ -331,7 +337,8 @@ void GcodeSuite::G28() {
         ? (parser.seenval('R') ? parser.value_linear_units() : Z_HOMING_HEIGHT)
         : 0;
 
-    if (z_homing_height && (doX || doY || ENABLED(Z_SAFE_HOMING))) {
+    if (z_homing_height && (doX || doY  // #if ENABLED(E_AXIS_HOMING)         // || doE      // #endif
+    )) {
       // Raise Z before homing any other axes and z is not already high enough (never lower z)
       destination.z = z_homing_height + (TEST(axis_known_position, Z_AXIS) ? 0.0f : current_position.z);
       if (destination.z > current_position.z) {
@@ -347,8 +354,12 @@ void GcodeSuite::G28() {
     #endif
 
     // Home Y (before X)
-    if (ENABLED(HOME_Y_BEFORE_X) && (doY || (ENABLED(CODEPENDENT_XY_HOMING) && doX)))
-      homeaxis(Y_AXIS);
+    #if ENABLED(HOME_Y_BEFORE_X)
+
+      if (doY || (doX && ENABLED(CODEPENDENT_XY_HOMING)))
+        homeaxis(Y_AXIS);
+
+    #endif
 
     // Home X
     if (doX || (doY && ENABLED(CODEPENDENT_XY_HOMING) && DISABLED(HOME_Y_BEFORE_X))) {
@@ -405,7 +416,22 @@ void GcodeSuite::G28() {
       } // doZ
 
     #endif // Z_HOME_DIR < 0
-
+   #if ENABLED(E_AXIS_HOMING)
+    // Home E
+      if (doE) {
+// TODO: Test E_HOMING is compatible with multiple E-steppers
+//        #if EXTRUDERS > 1 
+//          active_extruder = 1;
+//          homeaxis(E_AXIS);
+//          #if EXTRUDERS > 2
+//            active_extruder = 2;
+//            homeaxis(E_AXIS);
+//            active_extruder = 0;
+//          #endif
+//        #endif
+        homeaxis(E_AXIS);
+      } // doE
+    #endif // ENABLED(E_AXIS_HOMING)
     sync_plan_position();
 
   #endif // !DELTA (G28)
