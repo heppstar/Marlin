@@ -1,1 +1,3 @@
 Kör både [XYZ]_HOME_BUMP_MM (gamla) och HOMING_BUMP_MM{} (nya) i Configuration_adv.h. Avaktiverat kontroll i Marlin/src/inc/SanityCheck rad 510
+
+Från 3 May revideringen.
