@@ -628,18 +628,18 @@
 
 //#define SENSORLESS_BACKOFF_MM  { 2, 2 }     // (mm) Backoff from endstops before sensorless homing
 #if ENABLED(E_AXIS_HOMING)
-  #define HOMING_BUMP_MM      { 5, 5, 2 }       // (mm) Backoff from endstops after first bump
+  #define HOMING_BUMP_MM      { 5, 5, 2, 2 }       // (mm) Backoff from endstops after first bump
   #define HOMING_BUMP_DIVISOR { 2, 2, 4, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
-  #define X_HOME_BUMP_MM 5
-  #define Y_HOME_BUMP_MM 5
-  #define Z_HOME_BUMP_MM 2
-  #define E_HOME_BUMP_MM 2
+  //#define X_HOME_BUMP_MM 5 //Tobbe
+  //#define Y_HOME_BUMP_MM 5 //Tobbe
+  //#define Z_HOME_BUMP_MM 2 //Tobbe
+  //#define E_HOME_BUMP_MM 2 //Tobbe
 #else
   #define HOMING_BUMP_MM      { 5, 5, 2 }       // (mm) Backoff from endstops after first bump
   #define HOMING_BUMP_DIVISOR { 2, 2, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
-  #define X_HOME_BUMP_MM 5
-  #define Y_HOME_BUMP_MM 5
-  #define Z_HOME_BUMP_MM 2
+  //#define X_HOME_BUMP_MM 5 //Tobbe
+  //#define Y_HOME_BUMP_MM 5 //Tobbe
+  //#define Z_HOME_BUMP_MM 2 //Tobbe
 #endif
 
 #if ENABLED(E_AXIS_HOMING)
@@ -826,7 +826,7 @@
 // Default stepper release if idle. Set to 0 to deactivate.
 // Steppers will shut down DEFAULT_STEPPER_DEACTIVE_TIME seconds after the last move when DISABLE_INACTIVE_? is true.
 // Time can be set by M18 and M84.
-#define DEFAULT_STEPPER_DEACTIVE_TIME 120
+#define DEFAULT_STEPPER_DEACTIVE_TIME 0
 #define DISABLE_INACTIVE_X true
 #define DISABLE_INACTIVE_Y true
 #define DISABLE_INACTIVE_Z true  // Set to false if the nozzle will fall down on your printed part when print has finished.
@@ -2445,7 +2445,7 @@
    * M912 - Clear stepper driver overtemperature pre-warn condition flag.
    * M122 - Report driver parameters (Requires TMC_DEBUG)
    */
-  //#define MONITOR_DRIVER_STATUS
+  #define MONITOR_DRIVER_STATUS //Tobbe
 
   #if ENABLED(MONITOR_DRIVER_STATUS)
     #define CURRENT_STEP_DOWN     50  // [mA]
@@ -2540,7 +2540,7 @@
    * Enable M122 debugging command for TMC stepper drivers.
    * M122 S0/1 will enable continous reporting.
    */
-  //#define TMC_DEBUG
+  #define TMC_DEBUG //Tobbe
 
   /**
    * You can set your own advanced settings by filling in predefined functions.
@@ -3508,7 +3508,7 @@
 //
 // M43 - display pin status, toggle pins, watch pins, watch endstops & toggle LED, test servo probe
 //
-//#define PINS_DEBUGGING
+#define PINS_DEBUGGING //Tobbe
 
 // Enable Marlin dev mode which adds some special commands
 //#define MARLIN_DEV_MODE

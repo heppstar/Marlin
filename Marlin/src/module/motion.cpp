@@ -73,8 +73,8 @@
 
 #define DEBUG_OUT ENABLED(DEBUG_LEVELING_FEATURE)
 #include "../core/debug_out.h"
-
-#if ENABLED(E_AXIS_HOMING)
+/*
+#if ENABLED(E_AXIS_HOMING) //Tobbe
   #define XYZ_CONSTS(T, NAME, OPT) const PROGMEM XYZEval<T> NAME##_P = { X_##OPT, Y_##OPT, Z_##OPT, E_##OPT }
 #else
   #define XYZ_CONSTS(T, NAME, OPT) const PROGMEM XYZEval<T> NAME##_P = { X_##OPT, Y_##OPT, Z_##OPT }
@@ -86,7 +86,7 @@ XYZ_CONSTS(float, base_home_pos,  HOME_POS);
 XYZ_CONSTS(float, max_length,     MAX_LENGTH);
 XYZ_CONSTS(float, home_bump_mm,   HOME_BUMP_MM);
 XYZ_CONSTS(signed char, home_dir, HOME_DIR);
-
+*/
 /**
  * axis_homed
  *   Flags that each linear axis was homed.
