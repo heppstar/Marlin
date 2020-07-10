@@ -356,9 +356,9 @@ namespace Language_en {
   PROGMEM Language_Str MSG_BUTTON_BACK                     = _UxGT("Back");
   PROGMEM Language_Str MSG_BUTTON_PROCEED                  = _UxGT("Proceed");
   PROGMEM Language_Str MSG_PAUSING                         = _UxGT("Pausing...");
-  PROGMEM Language_Str MSG_PAUSE_PRINT                     = _UxGT("Pause Print");
+  PROGMEM Language_Str MSG_PAUSE_PRINT                     = _UxGT("Pause Job");
   PROGMEM Language_Str MSG_RESUME_PRINT                    = _UxGT("Resume Print");
-  PROGMEM Language_Str MSG_STOP_PRINT                      = _UxGT("Stop Print");
+  PROGMEM Language_Str MSG_STOP_PRINT                      = _UxGT("Stop Job");
   PROGMEM Language_Str MSG_PRINTING_OBJECT                 = _UxGT("Printing Object");
   PROGMEM Language_Str MSG_CANCEL_OBJECT                   = _UxGT("Cancel Object");
   PROGMEM Language_Str MSG_CANCEL_OBJECT_N                 = _UxGT("Cancel Object =");
@@ -478,14 +478,14 @@ namespace Language_en {
   PROGMEM Language_Str MSG_DELTA_DIAG_ROD                  = _UxGT("Diag Rod");
   PROGMEM Language_Str MSG_DELTA_HEIGHT                    = _UxGT("Height");
   PROGMEM Language_Str MSG_DELTA_RADIUS                    = _UxGT("Radius");
-  PROGMEM Language_Str MSG_INFO_MENU                       = _UxGT("About Printer");
+  PROGMEM Language_Str MSG_INFO_MENU                       = _UxGT("About Job");
   PROGMEM Language_Str MSG_INFO_PRINTER_MENU               = _UxGT("Printer Info");
   PROGMEM Language_Str MSG_3POINT_LEVELING                 = _UxGT("3-Point Leveling");
   PROGMEM Language_Str MSG_LINEAR_LEVELING                 = _UxGT("Linear Leveling");
   PROGMEM Language_Str MSG_BILINEAR_LEVELING               = _UxGT("Bilinear Leveling");
   PROGMEM Language_Str MSG_UBL_LEVELING                    = _UxGT("Unified Bed Leveling");
   PROGMEM Language_Str MSG_MESH_LEVELING                   = _UxGT("Mesh Leveling");
-  PROGMEM Language_Str MSG_INFO_STATS_MENU                 = _UxGT("Printer Stats");
+  PROGMEM Language_Str MSG_INFO_STATS_MENU                 = _UxGT("Job Stats");
   PROGMEM Language_Str MSG_INFO_BOARD_MENU                 = _UxGT("Board Info");
   PROGMEM Language_Str MSG_INFO_THERMISTOR_MENU            = _UxGT("Thermistors");
   PROGMEM Language_Str MSG_INFO_EXTRUDERS                  = _UxGT("Extruders");
@@ -500,9 +500,9 @@ namespace Language_en {
   PROGMEM Language_Str MSG_KILL_EXPECTED_PRINTER           = _UxGT("INCORRECT PRINTER");
 
   #if LCD_WIDTH >= 20
-    PROGMEM Language_Str MSG_INFO_PRINT_COUNT              = _UxGT("Print Count");
+    PROGMEM Language_Str MSG_INFO_PRINT_COUNT              = _UxGT("Job Count");
     PROGMEM Language_Str MSG_INFO_COMPLETED_PRINTS         = _UxGT("Completed");
-    PROGMEM Language_Str MSG_INFO_PRINT_TIME               = _UxGT("Total Print time");
+    PROGMEM Language_Str MSG_INFO_PRINT_TIME               = _UxGT("Total Job time");
     PROGMEM Language_Str MSG_INFO_PRINT_LONGEST            = _UxGT("Longest Job Time");
     PROGMEM Language_Str MSG_INFO_PRINT_FILAMENT           = _UxGT("Extruded Total");
   #else

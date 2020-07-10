@@ -92,7 +92,7 @@
 //#define SHOW_CUSTOM_BOOTSCREEN
 
 // Show the bitmap in Marlin/_Statusscreen.h on the status screen.
-//#define CUSTOM_STATUS_SCREEN_IMAGE
+#define CUSTOM_STATUS_SCREEN_IMAGE //Tobbe
 
 // @section machine
 
@@ -1433,9 +1433,9 @@
 
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (50*60)
-#define HOMING_FEEDRATE_Z  (4*60)
+#define HOMING_FEEDRATE_Z  (25*60) //Tobbe
 #if ENABLED(E_AXIS_HOMING)
-  #define HOMING_FEEDRATE_E  (4*60)
+  #define HOMING_FEEDRATE_E  (25*60) //Tobbe
 #endif
 
 // Validate that endstops are triggered on homing moves

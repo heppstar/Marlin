@@ -628,22 +628,22 @@
 
 //#define SENSORLESS_BACKOFF_MM  { 2, 2 }     // (mm) Backoff from endstops before sensorless homing
 #if ENABLED(E_AXIS_HOMING)
-  #define HOMING_BUMP_MM      { 5, 5, 2, 2 }       // (mm) Backoff from endstops after first bump
-  #define HOMING_BUMP_DIVISOR { 2, 2, 4, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+  #define HOMING_BUMP_MM      { 5, 5, 5, 5 }       // (mm) Backoff from endstops after first bump
+  #define HOMING_BUMP_DIVISOR { 2, 2, 2, 2 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
   //#define X_HOME_BUMP_MM 5 //Tobbe
   //#define Y_HOME_BUMP_MM 5 //Tobbe
   //#define Z_HOME_BUMP_MM 2 //Tobbe
   //#define E_HOME_BUMP_MM 2 //Tobbe
 #else
-  #define HOMING_BUMP_MM      { 5, 5, 2 }       // (mm) Backoff from endstops after first bump
-  #define HOMING_BUMP_DIVISOR { 2, 2, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+  #define HOMING_BUMP_MM      { 5, 5, 5 }       // (mm) Backoff from endstops after first bump
+  #define HOMING_BUMP_DIVISOR { 2, 2, 2 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
   //#define X_HOME_BUMP_MM 5 //Tobbe
   //#define Y_HOME_BUMP_MM 5 //Tobbe
   //#define Z_HOME_BUMP_MM 2 //Tobbe
 #endif
 
 #if ENABLED(E_AXIS_HOMING)
-  //#define HOMING_BACKOFF_POST_MM { 2, 2, 2, 2 }  // (mm) Backoff from endstops after homing
+  //#define HOMING_BACKOFF_POST_MM { 5, 5, 5, 5 }  // (mm) Backoff from endstops after homing
 #else
   //#define HOMING_BACKOFF_POST_MM { 2, 2, 2 }  // (mm) Backoff from endstops after homing
 #endif
@@ -1142,7 +1142,7 @@
 
   //#define MENU_ADDAUTOSTART               // Add a menu option to run auto#.g files
 
-  #define EVENT_GCODE_SD_STOP "G28XY"       // G-code to run on Stop Print (e.g., "G28XY" or "G27")
+  #define EVENT_GCODE_SD_STOP "T0\nG28E\nG28Z\nG28XY"       // G-code to run on Stop Print (e.g., "G28XY" or "G27") //Tobbe exempel "G1 E-1\nG27"
 
   #if ENABLED(PRINTER_EVENT_LEDS)
     #define PE_LEDS_COMPLETED_TIME  (30*60) // (seconds) Time to keep the LED "done" color before restoring normal illumination
@@ -3490,12 +3490,12 @@
 #if ENABLED(PRINTCOUNTER)
   #define SERVICE_WARNING_BUZZES  3
   // Activate up to 3 service interval watchdogs
-  //#define SERVICE_NAME_1      "Service S"
-  //#define SERVICE_INTERVAL_1  100 // print hours
-  //#define SERVICE_NAME_2      "Service L"
+  #define SERVICE_NAME_1      "Service 100h" //Tobbe
+  #define SERVICE_INTERVAL_1  100 // print hours //Tobbe
+  //#define SERVICE_NAME_2      "Service 200h"
   //#define SERVICE_INTERVAL_2  200 // print hours
-  //#define SERVICE_NAME_3      "Service 3"
-  //#define SERVICE_INTERVAL_3    1 // print hours
+  //#define SERVICE_NAME_3      "Service 300h"
+  //#define SERVICE_INTERVAL_3  300 // print hours
 #endif
 
 // @section develop

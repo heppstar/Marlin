@@ -110,7 +110,7 @@ void menu_main() {
         );
       });
     #endif
-    SUBMENU(MSG_TUNE, menu_tune);
+//    SUBMENU(MSG_TUNE, menu_tune); //Tobbe
   }
   else {
 
@@ -158,7 +158,7 @@ void menu_main() {
   #endif
 
   #if HAS_TEMPERATURE
-    SUBMENU(MSG_TEMPERATURE, menu_temperature);
+  //  SUBMENU(MSG_TEMPERATURE, menu_temperature); //Tobbe
   #endif
 
   #if HAS_POWER_MONITOR
@@ -173,7 +173,7 @@ void menu_main() {
     if (!busy) SUBMENU(MSG_MMU2_MENU, menu_mmu2);
   #endif
 
-  SUBMENU(MSG_CONFIGURATION, menu_configuration);
+  // SUBMENU(MSG_CONFIGURATION, menu_configuration); //Tobbe
 
   #if ENABLED(CUSTOM_USER_MENUS)
     #ifdef CUSTOM_USER_MENU_TITLE

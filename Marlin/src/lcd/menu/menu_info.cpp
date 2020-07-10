@@ -60,14 +60,14 @@
 
     STATIC_ITEM(MSG_INFO_PRINT_LONGEST, SS_LEFT);                                           // Longest job time:
     STATIC_ITEM_P(PSTR("> "), SS_LEFT, duration_t(stats.longestPrint).toString(buffer));      // > 99y 364d 23h 59m 59s
-
-    STATIC_ITEM(MSG_INFO_PRINT_FILAMENT, SS_LEFT);                                          // Extruded total:
+/*
+    STATIC_ITEM(MSG_INFO_PRINT_FILAMENT, SS_LEFT);                                          // Extruded total: //Tobbe
     sprintf_P(buffer, PSTR("%ld.%im")
       , long(stats.filamentUsed / 1000)
       , int16_t(stats.filamentUsed / 100) % 10
     );
     STATIC_ITEM_P(PSTR("> "), SS_LEFT, buffer);                                             // > 125m
-
+*/
     #if SERVICE_INTERVAL_1 > 0 || SERVICE_INTERVAL_2 > 0 || SERVICE_INTERVAL_3 > 0
       strcpy_P(buffer, GET_TEXT(MSG_SERVICE_IN));
     #endif
@@ -266,10 +266,10 @@ void menu_info() {
   #if ENABLED(LCD_PRINTER_INFO_IS_BOOTSCREEN)
     SUBMENU(MSG_INFO_PRINTER_MENU, TERN(SHOW_CUSTOM_BOOTSCREEN, menu_show_custom_bootscreen, menu_show_marlin_bootscreen));
   #else
-    SUBMENU(MSG_INFO_PRINTER_MENU, menu_info_printer);           // Printer Info >
-    SUBMENU(MSG_INFO_BOARD_MENU, menu_info_board);               // Board Info >
+    //SUBMENU(MSG_INFO_PRINTER_MENU, menu_info_printer);           // Printer Info > //Tobbe
+    //SUBMENU(MSG_INFO_BOARD_MENU, menu_info_board);               // Board Info > //Tobbe
     #if EXTRUDERS
-      SUBMENU(MSG_INFO_THERMISTOR_MENU, menu_info_thermistors);  // Thermistors >
+      //SUBMENU(MSG_INFO_THERMISTOR_MENU, menu_info_thermistors);  // Thermistors > //Tobbe
     #endif
   #endif
 
