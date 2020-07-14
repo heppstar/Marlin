@@ -643,7 +643,7 @@
 #endif
 
 #if ENABLED(E_AXIS_HOMING)
-  //#define HOMING_BACKOFF_POST_MM { 5, 5, 5, 5 }  // (mm) Backoff from endstops after homing
+  //#define HOMING_BACKOFF_POST_MM { 5, 5, 5, 5 }  // (mm) Backoff from endstops after homing //Tobbe
 #else
   //#define HOMING_BACKOFF_POST_MM { 2, 2, 2 }  // (mm) Backoff from endstops after homing
 #endif
@@ -1055,7 +1055,7 @@
 #if HAS_LCD_MENU
 
   // Include a page of printer information in the LCD Main Menu
-  //#define LCD_INFO_MENU
+  #define LCD_INFO_MENU //Tobbe
   #if ENABLED(LCD_INFO_MENU)
     //#define LCD_PRINTER_INFO_IS_BOOTSCREEN // Show bootscreen(s) instead of Printer Info pages
   #endif
@@ -1298,7 +1298,7 @@
    *
    * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
    */
-  //#define SDCARD_CONNECTION LCD
+  #define SDCARD_CONNECTION ONBOARD //Tobbe
 
 #endif // SDSUPPORT
 
