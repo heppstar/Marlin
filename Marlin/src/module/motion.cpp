@@ -1995,8 +1995,12 @@ void homeaxis(const AxisEnum axis) {
     if (axis == Z_AXIS && probe.stow()) return;
   #endif
 
-  #if DISABLED(DELTA) && defined(HOMING_BACKOFF_POST_MM)
+  #if DISABLED(DELTA) && defined(HOMING_BACKOFF_POST_MM) //Tobbe Backoff Test
+    #if ENABLED(E_AXIS_HOMING)
+    const xyze_float_t endstop_backoff = HOMING_BACKOFF_POST_MM;
+    #else
     const xyz_float_t endstop_backoff = HOMING_BACKOFF_POST_MM;
+    #endif
     if (endstop_backoff[axis]) {
       current_position[axis] -= ABS(endstop_backoff[axis]) * axis_home_dir;
       line_to_current_position(

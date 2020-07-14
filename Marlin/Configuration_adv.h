@@ -643,9 +643,9 @@
 #endif
 
 #if ENABLED(E_AXIS_HOMING)
-  //#define HOMING_BACKOFF_POST_MM { 5, 5, 5, 5 }  // (mm) Backoff from endstops after homing //Tobbe
+  #define HOMING_BACKOFF_POST_MM { 5, 5, 5, 5 }  // (mm) Backoff from endstops after homing //Tobbe
 #else
-  //#define HOMING_BACKOFF_POST_MM { 2, 2, 2 }  // (mm) Backoff from endstops after homing
+  #define HOMING_BACKOFF_POST_MM { 2, 2, 2 }  // (mm) Backoff from endstops after homing
 #endif
 
 //#define QUICK_HOME                          // If G28 contains XY do a diagonal move first
