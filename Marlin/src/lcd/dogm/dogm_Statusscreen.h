@@ -1336,10 +1336,10 @@
   #elif HOTENDS
     #error "Status screen heaters region was not specified."
   #endif
-  #if STATUS_LOGO_WIDTH > (LCD_PIXEL_WIDTH - (_EXTRA_WIDTH + _HEATERS_WIDTH))
-    #warning "Unable to fit custom Status Screen logo. Disabling."
-    #undef STATUS_LOGO_WIDTH
-  #endif
+ // #if STATUS_LOGO_WIDTH > (LCD_PIXEL_WIDTH - (_EXTRA_WIDTH + _HEATERS_WIDTH)) //Tobbe
+ //   #warning "Unable to fit custom Status Screen logo. Disabling."
+ //   #undef STATUS_LOGO_WIDTH
+ // #endif
 
   #if (HAS_MULTI_HOTEND && STATUS_LOGO_WIDTH && BED_OR_CHAMBER_OR_FAN) || (HOTENDS >= 3 && !BED_OR_CHAMBER_OR_FAN)
     #define _STATUS_HEATERS_X(H,S,N) ((LCD_PIXEL_WIDTH - (H * (S + N)) - (_EXTRA_WIDTH) + (STATUS_LOGO_WIDTH)) / 2)
@@ -1757,7 +1757,7 @@
   #define DO_DRAW_LOGO 1
 #endif
 #if HOTENDS > 0
-  #define DO_DRAW_HOTENDS 1
+  #define DO_DRAW_HOTENDS 0 //Tobbe
 #endif
 #if HAS_HEATED_BED && HOTENDS <= 4
   #define DO_DRAW_BED 1
@@ -1769,7 +1769,7 @@
   #define DO_DRAW_CHAMBER 1
 #endif
 #if HAS_FAN0 && STATUS_FAN_WIDTH && HOTENDS <= 4 && defined(STATUS_FAN_FRAMES)
-  #define DO_DRAW_FAN 1
+  #define DO_DRAW_FAN 0 //Tobbe
 #endif
 #if BOTH(HAS_HOTEND, STATUS_HOTEND_ANIM)
   #define ANIM_HOTEND 1

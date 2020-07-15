@@ -105,7 +105,7 @@ void menu_tune() {
   //
   // Speed:
   //
-  EDIT_ITEM(int3, MSG_SPEED, &feedrate_percentage, 10, 999);
+  //EDIT_ITEM(int3, MSG_SPEED, &feedrate_percentage, 10, 999); //Tobbe
 
   //
   // Manual bed leveling, Bed Z:

@@ -886,6 +886,14 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
         case 1001: M1001(); break;                                // M1001: [INTERNAL] Handle SD completion
       #endif
 
+      #if ENABLED(LEAN)
+        case 2000: M2000(); break;                                    // M2001: New LEAN command
+      #endif
+
+      #if ENABLED(LEAN)
+        case 2001: M2001(); break;                                    // M2001: New LEAN command
+      #endif
+
       #if ENABLED(MAX7219_GCODE)
         case 7219: M7219(); break;                                // M7219: Set LEDs, columns, and rows
       #endif

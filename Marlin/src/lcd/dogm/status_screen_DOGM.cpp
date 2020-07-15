@@ -796,8 +796,9 @@ void MarlinUI::draw_status_screen() {
   }
 
   //
-  // Feedrate
+  // Feedrate //Tobbe
   //
+  /*
   #define EXTRAS_2_BASELINE (EXTRAS_BASELINE + 3)
 
   if (PAGE_CONTAINS(EXTRAS_2_BASELINE - INFO_FONT_ASCENT, EXTRAS_2_BASELINE - 1)) {
@@ -820,7 +821,7 @@ void MarlinUI::draw_status_screen() {
       lcd_put_wchar(93, EXTRAS_2_BASELINE, LCD_STR_FILAM_MUL[0]);
     #endif
   }
-
+*/
   //
   // Status line
   //
