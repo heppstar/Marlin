@@ -194,9 +194,9 @@ void menu_main() {
     #endif
   #endif
 
-  #if ENABLED(LCD_INFO_MENU)
-    SUBMENU(MSG_INFO_MENU, menu_info);
-  #endif
+ // #if ENABLED(LCD_INFO_MENU)
+ //   SUBMENU(MSG_INFO_MENU, menu_info);
+ // #endif
 
   #if EITHER(LED_CONTROL_MENU, CASE_LIGHT_MENU)
     SUBMENU(MSG_LEDS, menu_led);
@@ -301,6 +301,10 @@ void menu_main() {
       );
     }
   #endif
+
+ #if ENABLED(LCD_INFO_MENU) //Tobbe
+  SUBMENU(MSG_INFO_MENU, menu_info);
+ #endif
 
   END_MENU();
 }

@@ -629,7 +629,7 @@
 //#define SENSORLESS_BACKOFF_MM  { 2, 2 }     // (mm) Backoff from endstops before sensorless homing
 #if ENABLED(E_AXIS_HOMING)
   #define HOMING_BUMP_MM      { 5, 5, 5, 5 }       // (mm) Backoff from endstops after first bump
-  #define HOMING_BUMP_DIVISOR { 2, 2, 2, 2 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+  #define HOMING_BUMP_DIVISOR { 4, 4, 4, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
   //#define X_HOME_BUMP_MM 5 //Tobbe
   //#define Y_HOME_BUMP_MM 5 //Tobbe
   //#define Z_HOME_BUMP_MM 2 //Tobbe

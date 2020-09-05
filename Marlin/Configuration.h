@@ -799,9 +799,9 @@
  */
 #define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 3000, 3000, 3000, 3000 } //Tobbe
 
-//#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
+#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
-  #define MAX_ACCEL_EDIT_VALUES       { 6000, 6000, 200, 20000 } // ...or, set your own edit limits
+  #define MAX_ACCEL_EDIT_VALUES       { 1500, 1500, 1500, 1500 } // ...or, set your own edit limits
 #endif
 
 /**
