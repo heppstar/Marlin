@@ -19,6 +19,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
+#if ENABLED(LEAN)
+  #define IR_DETECTOR                          PC4
+#endif
+
 #pragma once
 
 #ifndef TARGET_STM32F4

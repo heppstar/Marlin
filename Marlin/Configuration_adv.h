@@ -1142,7 +1142,7 @@
 
   //#define MENU_ADDAUTOSTART               // Add a menu option to run auto#.g files
 
-  #define EVENT_GCODE_SD_STOP "T0\nG28E\nG28Z\nG28XY"       // G-code to run on Stop Print (e.g., "G28XY" or "G27") //Tobbe exempel "G1 E-1\nG27"
+  #define EVENT_GCODE_SD_STOP "G28Z\nT0\nG28E\nG28XY"       // G-code to run on Stop Print (e.g., "G28XY" or "G27") //Tobbe exempel "G1 E-1\nG27"
 
   #if ENABLED(PRINTER_EVENT_LEDS)
     #define PE_LEDS_COMPLETED_TIME  (30*60) // (seconds) Time to keep the LED "done" color before restoring normal illumination
@@ -2239,10 +2239,11 @@
   #endif
 
   #if AXIS_IS_TMC(Y)
-    #define Y_CURRENT       800
+    #define Y_CURRENT       1200
     #define Y_CURRENT_HOME  Y_CURRENT
     #define Y_MICROSTEPS     16
-    #define Y_RSENSE          0.11
+ //   #define Y_RSENSE          0.075 //Tobbe TMC5160
+    #define Y_RSENSE          0.11 //Tobbe
     #define Y_CHAIN_POS      -1
   #endif
 
@@ -2367,7 +2368,7 @@
    * The default SW SPI pins are defined the respective pins files,
    * but you can override or define them here.
    */
-  //#define TMC_USE_SW_SPI
+  //#define TMC_USE_SW_SPI //Tobbe
   //#define TMC_SW_MOSI       -1
   //#define TMC_SW_MISO       -1
   //#define TMC_SW_SCK        -1

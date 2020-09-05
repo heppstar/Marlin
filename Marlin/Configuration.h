@@ -777,7 +777,7 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 80, 80, 80, 80 } //Tobbe
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 400, 400, 400 } //Tobbe
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -1113,7 +1113,7 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR false
+#define INVERT_X_DIR false //Leantronic FIddes robot true min false
 #define INVERT_Y_DIR false //Tobbe
 #define INVERT_Z_DIR false
 
@@ -1152,8 +1152,8 @@
 // @section machine
 
 // The size of the print bed
-#define X_BED_SIZE 1000 //Tobbe
-#define Y_BED_SIZE 600 //Tobbe
+#define X_BED_SIZE 825 //Tobbe
+#define Y_BED_SIZE 305 //Tobbe
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
@@ -1434,10 +1434,10 @@
 #endif
 
 // Homing speeds (mm/m)
-#define HOMING_FEEDRATE_XY (50*60)
-#define HOMING_FEEDRATE_Z  (25*60) //Tobbe
+#define HOMING_FEEDRATE_XY (30*60)
+#define HOMING_FEEDRATE_Z  (15*60) //Tobbe
 #if ENABLED(E_AXIS_HOMING)
-  #define HOMING_FEEDRATE_E  (25*60) //Tobbe
+  #define HOMING_FEEDRATE_E  (15*60) //Tobbe
 #endif
 
 // Validate that endstops are triggered on homing moves
@@ -1985,7 +1985,7 @@
 // RepRapDiscount FULL GRAPHIC Smart Controller
 // http://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller
 //
-#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+//#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER //Tobbe
 
 //
 // ReprapWorld Graphical LCD
@@ -2071,7 +2071,7 @@
 // This is RAMPS-compatible using a single 10-pin connector.
 // (For CR-10 owners who want to replace the Melzi Creality board but retain the display)
 //
-//#define CR10_STOCKDISPLAY
+#define CR10_STOCKDISPLAY
 
 //
 // Ender-2 OEM display, a variant of the MKS_MINI_12864
