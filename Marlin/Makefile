@@ -98,7 +98,7 @@ NEOPIXEL           ?= 0
 ############
 # Try to automatically determine whether RELOC_WORKAROUND is needed based
 # on GCC versions:
-#   http://www.avrfreaks.net/comment/1789106#comment-1789106
+#   https://www.avrfreaks.net/comment/1789106#comment-1789106
 
 CC_MAJ:=$(shell $(CC) -dM -E - < /dev/null | grep __GNUC__ | cut -f3 -d\ )
 CC_MIN:=$(shell $(CC) -dM -E - < /dev/null | grep __GNUC_MINOR__ | cut -f3 -d\ )
@@ -694,7 +694,7 @@ ifeq ($(HARDWARE_VARIANT), Teensy)
   LIB_CXXSRC += usb_api.cpp
 
 else ifeq ($(HARDWARE_VARIANT), archim)
-  CDEFS      += -DARDUINO_SAM_ARCHIM -DARDUINO_ARCH_SAM -D__SAM3X8E__ -DUSB_VID=0x27b1 -DUSB_PID=0x0001 -DUSBCON '-DUSB_MANUFACTURER="UltiMachine"' '-DUSB_PRODUCT="Archim"'
+  CDEFS      += -DARDUINO_SAM_ARCHIM -DARDUINO_ARCH_SAM -D__SAM3X8E__ -DUSB_VID=0x27b1 -DUSB_PID=0x0001 -DUSBCON '-DUSB_MANUFACTURER="UltiMachine"' '-DUSB_PRODUCT_STRING="Archim"'
   LIB_CXXSRC += variant.cpp IPAddress.cpp Reset.cpp RingBuffer.cpp Stream.cpp UARTClass.cpp  USARTClass.cpp abi.cpp new.cpp watchdog.cpp CDC.cpp PluggableUSB.cpp USBCore.cpp
   LIB_SRC    += cortex_handlers.c iar_calls_sam3.c syscalls_sam3.c dtostrf.c itoa.c
 

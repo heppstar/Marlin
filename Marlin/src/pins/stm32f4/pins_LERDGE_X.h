@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 #pragma once
@@ -27,8 +27,8 @@
 #define BOARD_INFO_NAME      "Lerdge X"
 #define DEFAULT_MACHINE_NAME "LERDGE"
 
-#define STEP_TIMER 4
-#define TEMP_TIMER 2
+#define STEP_TIMER                             4
+#define TEMP_TIMER                             2
 
 #define I2C_EEPROM
 
@@ -115,7 +115,7 @@
 #define KILL_PIN                            -1
 
 // Lerdge supports auto-power off and power loss sense through a single pin.
-#define POWER_LOSS_PIN                      PC14    // Power-loss / nAC_FAULT
+#define POWER_LOSS_PIN                      PC14  // Power-loss / nAC_FAULT
 
 #define SCK_PIN                             PC12
 #define MISO_PIN                            PC8

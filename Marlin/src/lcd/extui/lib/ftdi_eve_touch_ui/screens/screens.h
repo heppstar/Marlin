@@ -17,7 +17,7 @@
  *   GNU General Public License for more details.                           *
  *                                                                          *
  *   To view a copy of the GNU General Public License, go to the following  *
- *   location: <http://www.gnu.org/licenses/>.                              *
+ *   location: <https://www.gnu.org/licenses/>.                              *
  ****************************************************************************/
 
 #pragma once
@@ -63,7 +63,7 @@ enum {
 #else
   JERK_SCREEN_CACHE,
 #endif
-#if HAS_CASE_LIGHT
+#if ENABLED(CASE_LIGHT_ENABLE)
   CASE_LIGHT_SCREEN_CACHE,
 #endif
 #if EITHER(LIN_ADVANCE, FILAMENT_RUNOUT_SENSOR)
@@ -96,7 +96,7 @@ enum {
 #define STATUS_SCREEN_DL_SIZE        2048
 #define ALERT_BOX_DL_SIZE            3072
 #define SPINNER_DL_SIZE              3072
-#define FILE_SCREEN_DL_SIZE          3072
+#define FILE_SCREEN_DL_SIZE          4160
 #define PRINTING_SCREEN_DL_SIZE      2048
 
 /************************* MENU SCREEN DECLARATIONS *************************/
@@ -579,7 +579,7 @@ class DefaultAccelerationScreen : public BaseNumericAdjustmentScreen, public Cac
   };
 #endif
 
-#if HAS_CASE_LIGHT
+#if ENABLED(CASE_LIGHT_ENABLE)
   class CaseLightScreen : public BaseNumericAdjustmentScreen, public CachedScreen<CASE_LIGHT_SCREEN_CACHE> {
     public:
       static void onRedraw(draw_mode_t);

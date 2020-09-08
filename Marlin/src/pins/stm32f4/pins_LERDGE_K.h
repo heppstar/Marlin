@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 #pragma once
@@ -147,10 +147,10 @@
 // Misc. Functions
 //
 #define SDSS                                PC11
-#define LED_PIN                             PA15   // Alive
+#define LED_PIN                             PA15  // Alive
 #define PS_ON_PIN                           -1
 #define KILL_PIN                            -1
-#define POWER_LOSS_PIN                      PA4    // Power-loss / nAC_FAULT
+#define POWER_LOSS_PIN                      PA4   // Power-loss / nAC_FAULT
 
 #define SCK_PIN                             PC12
 #define MISO_PIN                            PC8

@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 #pragma once
@@ -44,8 +44,8 @@ constexpr uint8_t xyz_bits = _BV(X_AXIS) | _BV(Y_AXIS) | _BV(Z_AXIS)
 FORCE_INLINE bool no_axes_homed() { return !axis_homed; }
 FORCE_INLINE bool all_axes_homed() { return (axis_homed & xyz_bits) == xyz_bits; }
 FORCE_INLINE bool all_axes_known() { return (axis_known_position & xyz_bits) == xyz_bits; }
-FORCE_INLINE void set_all_unhomed() { axis_homed = 0; }
-FORCE_INLINE void set_all_unknown() { axis_known_position = 0; }
+FORCE_INLINE void set_all_homed() { axis_homed = axis_known_position = xyz_bits; }
+FORCE_INLINE void set_all_unhomed() { axis_homed = axis_known_position = 0; }
 
 FORCE_INLINE bool homing_needed() {
   return !TERN(HOME_AFTER_DEACTIVATE, all_axes_known, all_axes_homed)();
@@ -290,27 +290,29 @@ void remember_feedrate_and_scaling();
 void remember_feedrate_scaling_off();
 void restore_feedrate_and_scaling();
 
+void do_z_clearance(const float &zclear, const bool z_known=true, const bool raise_on_unknown=true, const bool lower_allowed=false);
+
 //
 // Homing
 //
 #if ENABLED(E_AXIS_HOMING)
-  uint8_t axes_need_homing(uint8_t axis_bits=0xf); // Binary(0xf) = 1111. This bit mask means "all 4 axes: yes"
-  bool axis_unhomed_error(uint8_t axis_bits=0xf); // Binary(0xf) = 1111. This bit mask means "all 4 axes: yes"
+  void homeaxis(const AxisEnum axis);
+  void set_axis_is_at_home(const AxisEnum axis);
+  void set_axis_never_homed(const AxisEnum axis);
+  uint8_t axes_should_home(uint8_t axis_bits=0x07); // Binary(0xf) = 1111. This bit mask means "all 4 axes: yes"
+  bool homing_needed_error(uint8_t axis_bits=0x07); // Binary(0xf) = 1111. This bit mask means "all 4 axes: yes"
 #else
-  uint8_t axes_need_homing(uint8_t axis_bits=0x07); // Binary(0x07) = 111. This bit mask means "all 3 axes: yes"
-  bool axis_unhomed_error(uint8_t axis_bits=0x07); // Binary(0x07) = 111. This bit mask means "all 3 axes: yes"
+  void homeaxis(const AxisEnum axis);
+  void set_axis_is_at_home(const AxisEnum axis);
+  void set_axis_never_homed(const AxisEnum axis);
+  uint8_t axes_should_home(uint8_t axis_bits=0x07); // Binary(0x07) = 111. This bit mask means "all 3 axes: yes"
+  bool homing_needed_error(uint8_t axis_bits=0x07); // Binary(0x07) = 111. This bit mask means "all 3 axes: yes"
 #endif
 #if ENABLED(NO_MOTION_BEFORE_HOMING)
-  #define MOTION_CONDITIONS (IsRunning() && !axis_unhomed_error())
+  #define MOTION_CONDITIONS (IsRunning() && !homing_needed_error())
 #else
   #define MOTION_CONDITIONS IsRunning()
 #endif
-
-void set_axis_is_at_home(const AxisEnum axis);
-
-void set_axis_not_trusted(const AxisEnum axis);
-
-void homeaxis(const AxisEnum axis);
 
 /**
  * Workspace offsets
@@ -450,7 +452,7 @@ void homeaxis(const AxisEnum axis);
 
   FORCE_INLINE bool dxc_is_duplicating() { return dual_x_carriage_mode >= DXC_DUPLICATION_MODE; }
 
-  float x_home_pos(const int extruder);
+  float x_home_pos(const uint8_t extruder);
 
   FORCE_INLINE int x_home_dir(const uint8_t extruder) { return extruder ? X2_HOME_DIR : X_HOME_DIR; }
 
@@ -466,4 +468,10 @@ void homeaxis(const AxisEnum axis);
 
 #if HAS_M206_COMMAND
   void set_home_offset(const AxisEnum axis, const float v);
+#endif
+
+#if USE_SENSORLESS
+  struct sensorless_t;
+  sensorless_t start_sensorless_homing_per_axis(const AxisEnum axis);
+  void end_sensorless_homing_per_axis(const AxisEnum axis, sensorless_t enable_stealth);
 #endif

@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 #pragma once
@@ -74,17 +74,9 @@
     uint8_t get_ADC_keyValue();
   #endif
 
-  #define LCD_UPDATE_INTERVAL TERN(TOUCH_BUTTONS, 50, 100)
+  #define LCD_UPDATE_INTERVAL TERN(HAS_TOUCH_XPT2046, 50, 100)
 
   #if HAS_LCD_MENU
-
-    #if HAS_GRAPHICAL_LCD
-      #define SETCURSOR(col, row) lcd_moveto(col * (MENU_FONT_WIDTH), (row + 1) * (MENU_FONT_HEIGHT))
-      #define SETCURSOR_RJ(len, row) lcd_moveto(LCD_PIXEL_WIDTH - (len) * (MENU_FONT_WIDTH), (row + 1) * (MENU_FONT_HEIGHT))
-    #else
-      #define SETCURSOR(col, row) lcd_moveto(col, row)
-      #define SETCURSOR_RJ(len, row) lcd_moveto(LCD_WIDTH - (len), row)
-    #endif
 
     #include "lcdprint.h"
 
@@ -157,7 +149,7 @@
 
   #define BUTTON_PRESSED(BN) !READ(BTN_## BN)
 
-  #if BUTTON_EXISTS(ENC) || ENABLED(TOUCH_BUTTONS)
+  #if BUTTON_EXISTS(ENC) || HAS_TOUCH_XPT2046
     #define BLEN_C 2
     #define EN_C _BV(BLEN_C)
   #endif
@@ -223,7 +215,7 @@
 
 #endif
 
-#if BUTTON_EXISTS(BACK) || ENABLED(TOUCH_BUTTONS)
+#if BUTTON_EXISTS(BACK) || HAS_TOUCH_XPT2046
   #define BLEN_D 3
   #define EN_D _BV(BLEN_D)
   #define LCD_BACK_CLICKED() (buttons & EN_D)
@@ -320,16 +312,18 @@ public:
     static void media_changed(const uint8_t old_stat, const uint8_t stat);
   #endif
 
+  #if ENABLED(DWIN_CREALITY_LCD)
+    static void refresh();
+  #else
+    FORCE_INLINE static void refresh() {
+      TERN_(HAS_SPI_LCD, refresh(LCDVIEW_CLEAR_CALL_REDRAW));
+    }
+  #endif
+
   #if HAS_SPI_LCD
     static bool detected();
     static void init_lcd();
-    FORCE_INLINE static void refresh() { refresh(LCDVIEW_CLEAR_CALL_REDRAW); }
   #else
-    #if ENABLED(DWIN_CREALITY_LCD)
-      static void refresh();
-    #else
-      static inline void refresh()  {}
-    #endif
     static inline bool detected() { return true; }
     static inline void init_lcd() {}
   #endif
@@ -411,13 +405,9 @@ public:
 
       #if HAS_GRAPHICAL_LCD
 
-        static bool drawing_screen, first_page;
-
         static void set_font(const MarlinFont font_nr);
 
       #else
-
-        static constexpr bool drawing_screen = false, first_page = true;
 
         static void set_custom_characters(const HD44780CharSet screen_charset=CHARSET_INFO);
 
@@ -459,13 +449,19 @@ public:
         static void draw_hotend_status(const uint8_t row, const uint8_t extruder);
       #endif
 
-      #if ENABLED(TOUCH_BUTTONS)
+      #if HAS_TOUCH_XPT2046
         static bool on_edit_screen;
         static void screen_click(const uint8_t row, const uint8_t col, const uint8_t x, const uint8_t y);
       #endif
 
       static void status_screen();
 
+    #endif
+
+    #if HAS_GRAPHICAL_LCD
+      static bool drawing_screen, first_page;
+    #else
+      static constexpr bool drawing_screen = false, first_page = true;
     #endif
 
     static bool get_blink();
@@ -505,11 +501,15 @@ public:
 
   #if PREHEAT_COUNT
     static preheat_t material_preset[PREHEAT_COUNT];
+    static PGM_P get_preheat_label(const uint8_t m);
   #endif
 
   #if HAS_LCD_MENU
+    #if LCD_TIMEOUT_TO_STATUS
+      static millis_t return_to_status_ms;
+    #endif
 
-    #if ENABLED(TOUCH_BUTTONS)
+    #if HAS_TOUCH_XPT2046
       static uint8_t touch_buttons;
       static uint8_t repeat_delay;
     #endif
@@ -518,6 +518,9 @@ public:
       static bool encoderRateMultiplierEnabled;
       static millis_t lastEncoderMovementMillis;
       static void enable_encoder_multiplier(const bool onoff);
+      #define ENCODER_RATE_MULTIPLY(F) (ui.encoderRateMultiplierEnabled = F)
+    #else
+      #define ENCODER_RATE_MULTIPLY(F) NOOP
     #endif
 
     // Manual Movement
@@ -640,7 +643,7 @@ public:
     #endif
 
     static void update_buttons();
-    static inline bool button_pressed() { return BUTTON_CLICK(); }
+    static inline bool button_pressed() { return BUTTON_CLICK() || TERN(TOUCH_SCREEN, touch_pressed(), false); }
     #if EITHER(AUTO_BED_LEVELING_UBL, G26_MESH_VALIDATION)
       static void wait_for_release();
     #endif
@@ -675,6 +678,10 @@ public:
 
   #endif
 
+  #if ENABLED(TOUCH_SCREEN_CALIBRATION)
+    static void touch_calibration();
+  #endif
+
 private:
 
   #if HAS_DISPLAY
@@ -688,6 +695,12 @@ private:
       static constexpr bool defer_return_to_status = false;
     #endif
     static void draw_status_screen();
+    #if HAS_GRAPHICAL_TFT
+      static void tft_idle();
+      #if ENABLED(TOUCH_SCREEN)
+        static bool touch_pressed();
+      #endif
+    #endif
   #endif
 };
 
