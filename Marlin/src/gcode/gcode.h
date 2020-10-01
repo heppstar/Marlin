@@ -877,9 +877,9 @@ private:
 
   TERN_(SDSUPPORT, static void M1001());
 
-  TERN_(LEAN, static void M2000()); //Tobbe
+  TERN_(LEANTRONIC, static void M2000()); //Tobbe
 
-  TERN_(LEAN, static void M2001()); //Tobbe
+  TERN_(LEANTRONIC, static void M2001()); //Tobbe
 
   TERN_(MAX7219_GCODE, static void M7219());
 

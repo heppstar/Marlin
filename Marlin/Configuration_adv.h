@@ -630,7 +630,7 @@
 //#define SENSORLESS_BACKOFF_MM  { 2, 2 }     // (mm) Backoff from endstops before sensorless homing
 #if ENABLED(E_AXIS_HOMING)
   #define HOMING_BUMP_MM      { 5, 5, 5, 5 }       // (mm) Backoff from endstops after first bump
-  #define HOMING_BUMP_DIVISOR { 4, 4, 4, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+  #define HOMING_BUMP_DIVISOR { 4, 4, 4, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate) //Tobbe
   //#define X_HOME_BUMP_MM 5 //Tobbe
   //#define Y_HOME_BUMP_MM 5 //Tobbe
   //#define Z_HOME_BUMP_MM 2 //Tobbe
@@ -829,7 +829,7 @@
  * Set DISABLE_INACTIVE_? 'true' to shut down axis steppers after an idle period.
  * The Deactive Time can be overridden with M18 and M84. Set to 0 for No Timeout.
  */
-#define DEFAULT_STEPPER_DEACTIVE_TIME 120
+#define DEFAULT_STEPPER_DEACTIVE_TIME 0 //Tobbe
 #define DISABLE_INACTIVE_X true
 #define DISABLE_INACTIVE_Y true
 #define DISABLE_INACTIVE_Z true  // Set 'false' if the nozzle could fall onto your printed part!
@@ -1040,7 +1040,7 @@
 // @section lcd
 
 #if EITHER(ULTIPANEL, EXTENSIBLE_UI)
-  #define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 2*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
+  #define MANUAL_FEEDRATE { 30*60, 30*60,15*60, 15*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel //Tobbe
   #define SHORT_MANUAL_Z_MOVE 0.025 // (mm) Smallest manual Z move (< 0.1mm)
   #if ENABLED(ULTIPANEL)
     #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
@@ -1161,7 +1161,7 @@
 
   //#define MENU_ADDAUTOSTART               // Add a menu option to run auto#.g files
 
-  #define EVENT_GCODE_SD_ABORT "G28XY"      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27") //Tobbe
+  #define EVENT_GCODE_SD_ABORT "T0\nG28E\nG28Z\nG28XY"      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27") //Tobbe
 
   #if ENABLED(PRINTER_EVENT_LEDS)
     #define PE_LEDS_COMPLETED_TIME  (30*60) // (seconds) Time to keep the LED "done" color before restoring normal illumination
@@ -1993,7 +1993,7 @@
  */
 #if EXTRUDERS > 1
   // Z raise distance for tool-change, as needed for some extruders
-  #define TOOLCHANGE_ZRAISE                 2 // (mm)
+  #define TOOLCHANGE_ZRAISE                 0 // (mm) //Tobbe
   //#define TOOLCHANGE_ZRAISE_BEFORE_RETRACT  // Apply raise before swap retraction (if enabled)
   //#define TOOLCHANGE_NO_RETURN              // Never return to previous position on tool-change
   #if ENABLED(TOOLCHANGE_NO_RETURN)
@@ -2241,11 +2241,10 @@
 #if HAS_TRINAMIC_CONFIG
 
   #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
-  #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
+  #define INTERPOLATE       true // Interpolate X/Y/Z_MICROSTEPS to 256 //Tobbe
 
   #if AXIS_IS_TMC(X)
-    //#define X_CURRENT       800        // (mA) RMS current. Multiply by 1.414 for peak current.
-    #define X_CURRENT       1000        // (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT       1400        // (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
     #define X_MICROSTEPS     16    // 0..256
     #define X_RSENSE          0.11
@@ -2261,7 +2260,7 @@
   #endif
 
   #if AXIS_IS_TMC(Y)
-    #define Y_CURRENT       1500
+    #define Y_CURRENT       1400
     #define Y_CURRENT_HOME  Y_CURRENT
     #define Y_MICROSTEPS     16
  //   #define Y_RSENSE          0.075 //Tobbe TMC5160
@@ -2278,8 +2277,7 @@
   #endif
 
   #if AXIS_IS_TMC(Z)
-   // #define Z_CURRENT       800
-    #define Z_CURRENT        1000
+    #define Z_CURRENT        1400
     #define Z_CURRENT_HOME  Z_CURRENT
     #define Z_MICROSTEPS     16
     #define Z_RSENSE          0.11
@@ -2311,24 +2309,21 @@
   #endif
 
   #if AXIS_IS_TMC(E0)
-    //#define E0_CURRENT      800
-    #define E0_CURRENT      1000
+    #define E0_CURRENT      1400
     #define E0_MICROSTEPS    16
     #define E0_RSENSE         0.11
     #define E0_CHAIN_POS     -1
   #endif
 
   #if AXIS_IS_TMC(E1)
-    //#define E1_CURRENT      800
-    #define E1_CURRENT      1000
+    #define E1_CURRENT      1400
     #define E1_MICROSTEPS    16
     #define E1_RSENSE         0.11
     #define E1_CHAIN_POS     -1
   #endif
 
   #if AXIS_IS_TMC(E2)
-    //#define E2_CURRENT      800
-    #define E2_CURRENT      1000
+    #define E2_CURRENT      1400
     #define E2_MICROSTEPS    16
     #define E2_RSENSE         0.11
     #define E2_CHAIN_POS     -1
@@ -2441,9 +2436,9 @@
    * Use Trinamic's ultra quiet stepping mode.
    * When disabled, Marlin will use spreadCycle stepping mode.
    */
-  #define STEALTHCHOP_XY
-  #define STEALTHCHOP_Z
-  #define STEALTHCHOP_E
+  #define STEALTHCHOP_XY //Tobbe
+  #define STEALTHCHOP_Z  //Tobbe
+  #define STEALTHCHOP_E  //Tobbe
 
   /**
    * Optimize spreadCycle chopper parameters by using predefined parameter sets

@@ -27,7 +27,7 @@
 #include "../../MarlinCore.h" // for startOrResumeJob
 
 
-#if ENABLED(LEAN)
+#if ENABLED(LEANTRONIC)
 /*
  * M78: Show print statistics
  */
@@ -52,4 +52,4 @@ void GcodeSuite::M2001() {
   */
 }
 
-#endif // LEAN
+#endif // LEANTRONIC

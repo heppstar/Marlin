@@ -20,8 +20,8 @@
  *
  */
 
-#if ENABLED(LEAN)
-  #define IR_DETECTOR                          PC4
+#if ENABLED(LEANTRONIC)
+  #define IR_DETECTOR                          PE10
 #endif
 
 #pragma once
@@ -71,7 +71,7 @@
   #define X_MIN_PIN                         PB10  // X-
   #define X_MAX_PIN                         PE15  // E0
   #define E_MIN_PIN                         PE15  // E-
-  #define E_MAX_PIN                         PE10  // E+
+  #define E_MAX_PIN                         PA1  // E+
 #endif
 
 #ifdef Y_STALL_SENSITIVITY
