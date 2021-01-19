@@ -94,7 +94,7 @@
 //#define SHOW_CUSTOM_BOOTSCREEN
 
 // Show the bitmap in Marlin/_Statusscreen.h on the status screen.
-#define CUSTOM_STATUS_SCREEN_IMAGE //Tobbe
+//#define CUSTOM_STATUS_SCREEN_IMAGE //Tobbe
 
 // @section machine
 
@@ -112,7 +112,7 @@
  * Select a secondary serial port on the board to use for communication with the host.
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
-//#define SERIAL_PORT_2 -1
+#define SERIAL_PORT_2 1
 
 /**
  * This setting determines the communication speed of the printer.
@@ -662,10 +662,10 @@
 //#define USE_EMAX_PLUG
 
 // Enable pullup for all endstops to prevent a floating state
-//#define ENDSTOPPULLUPS //Tobbe
+#define ENDSTOPPULLUPS //Tobbe
 #if DISABLED(ENDSTOPPULLUPS)
   // Disable ENDSTOPPULLUPS to set pullups individually
-  #define ENDSTOPPULLUP_XMAX
+  //#define ENDSTOPPULLUP_XMAX
   //#define ENDSTOPPULLUP_YMAX
   //#define ENDSTOPPULLUP_ZMAX
   //#define ENDSTOPPULLUP_EMAX
@@ -683,7 +683,7 @@
   //#define ENDSTOPPULLDOWN_XMAX
   //#define ENDSTOPPULLDOWN_YMAX
   //#define ENDSTOPPULLDOWN_ZMAX
-  #define ENDSTOPPULLDOWN_EMAX //Tobbe
+  //#define ENDSTOPPULLDOWN_EMAX //Tobbe
   //#define ENDSTOPPULLDOWN_XMIN
   //#define ENDSTOPPULLDOWN_YMIN
   //#define ENDSTOPPULLDOWN_ZMIN
@@ -696,10 +696,10 @@
 #define Y_MIN_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
 #define Z_MIN_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
 #define E_MIN_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
-#define X_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop. //Tobbe
-#define Y_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop. //Tobbe
-#define Z_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
-#define E_MAX_ENDSTOP_INVERTING false // Set to true to invert the logic of the endstop.
+#define X_MAX_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop. //Tobbe
+#define Y_MAX_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop. //Tobbe
+#define Z_MAX_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
+#define E_MAX_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
 #define Z_MIN_PROBE_ENDSTOP_INVERTING true // Set to true to invert the logic of the probe.
 
 /**
@@ -1785,7 +1785,7 @@
  * you must uncomment the following option or it won't work.
  *
  */
-#define SDSUPPORT
+#define SDSUPPORT //Tobbe
 
 /**
  * SD CARD: SPI SPEED
@@ -2124,7 +2124,7 @@
 // This is RAMPS-compatible using a single 10-pin connector.
 // (For CR-10 owners who want to replace the Melzi Creality board but retain the display)
 //
-#define CR10_STOCKDISPLAY
+//#define CR10_STOCKDISPLAY //Tobbe
 
 //
 // Ender-2 OEM display, a variant of the MKS_MINI_12864

@@ -37,42 +37,15 @@
 
 void GcodeSuite::M2000() {
 
-//  if (parser.intval('S') == 100) {  // "M2000 S100" will abort job
   if ((READ(IR_DETECTOR)) == 1) {  // "IR_DETECTOR" will abort job
-    SERIAL_ECHOLNPGM("IR_DETECTOR TRUE");    //Print M2000
 
     if (IS_SD_PRINTING()){
         card.flag.abort_sd_printing = true;         //Abort the current SD print job (started with M24)
-        SERIAL_ECHOLNPGM("Job aborted by M2000 Command");    //Print M2000
         }
-
+        
     return;
+
   }
-/*
-    if (parser.seenval('R')) {
-      const int x = parser.value_int();
-      if (x == 1000){
-        SERIAL_ECHOLNPGM("x == 1000"); //Print M2000
-      }
-    }
-*/
+  return;
 }
-
 #endif // LEANTRONIC
-
-
-
-/*
-if (READ(M2000_PROBE_PIN) == true) {
-        SERIAL_ECHOLNPGM("M2000_PROBE = TRUE");    //Print M2000_PROBE TRUE
-      }
-      else {
-        SERIAL_ECHOLNPGM("M2000_PROBE = FALSE");   //Print M2000_PROBE FALSE
-
-        if (IS_SD_PRINTING()){
-        card.flag.abort_sd_printing = true;         //Abort the current SD print job (started with M24)
-        }
-      }
-
-
-*/
