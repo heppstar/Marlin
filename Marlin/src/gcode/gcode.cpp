@@ -921,7 +921,7 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
       #endif
 
       #if ENABLED(LEANTRONIC)
-        case 2000: M2000(); break;                                    // M2001: New LEAN command
+        case 2000: M2000(); break;                                    // M2000: New LEAN command
       #endif
 
       #if ENABLED(LEANTRONIC)

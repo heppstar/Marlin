@@ -1161,7 +1161,7 @@
 
   //#define MENU_ADDAUTOSTART               // Add a menu option to run auto#.g files
 
-  #define EVENT_GCODE_SD_ABORT "T0\nG28E\nG28Z\nG28XY"      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27") //Tobbe
+  #define EVENT_GCODE_SD_ABORT "G28Z\nT0\nG28E\nT1\nG28E\nT2\nG28E\nG28XY"      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27") //Tobbe
 
   #if ENABLED(PRINTER_EVENT_LEDS)
     #define PE_LEDS_COMPLETED_TIME  (30*60) // (seconds) Time to keep the LED "done" color before restoring normal illumination
@@ -2241,12 +2241,12 @@
 #if HAS_TRINAMIC_CONFIG
 
   #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
-  #define INTERPOLATE       true // Interpolate X/Y/Z_MICROSTEPS to 256 //Tobbe
+  #define INTERPOLATE       false // Interpolate X/Y/Z_MICROSTEPS to 256 //Tobbe
 
   #if AXIS_IS_TMC(X)
     #define X_CURRENT       1400        // (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
-    #define X_MICROSTEPS     8    // 0..256
+    #define X_MICROSTEPS     16    // 0..256
     #define X_RSENSE          0.11
     #define X_CHAIN_POS      -1    // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
   #endif
@@ -2262,7 +2262,7 @@
   #if AXIS_IS_TMC(Y)
     #define Y_CURRENT       1400
     #define Y_CURRENT_HOME  Y_CURRENT
-    #define Y_MICROSTEPS     8
+    #define Y_MICROSTEPS     16
  //   #define Y_RSENSE          0.075 //Tobbe TMC5160
     #define Y_RSENSE          0.11 //Tobbe
     #define Y_CHAIN_POS      -1
@@ -2279,7 +2279,7 @@
   #if AXIS_IS_TMC(Z)
     #define Z_CURRENT        1400
     #define Z_CURRENT_HOME  Z_CURRENT
-    #define Z_MICROSTEPS     8
+    #define Z_MICROSTEPS     16
     #define Z_RSENSE          0.11
     #define Z_CHAIN_POS      -1
   #endif
@@ -2310,21 +2310,21 @@
 
   #if AXIS_IS_TMC(E0)
     #define E0_CURRENT      1400
-    #define E0_MICROSTEPS    8
+    #define E0_MICROSTEPS    16
     #define E0_RSENSE         0.11
     #define E0_CHAIN_POS     -1
   #endif
 
   #if AXIS_IS_TMC(E1)
     #define E1_CURRENT      1400
-    #define E1_MICROSTEPS    8
+    #define E1_MICROSTEPS    16
     #define E1_RSENSE         0.11
     #define E1_CHAIN_POS     -1
   #endif
 
   #if AXIS_IS_TMC(E2)
     #define E2_CURRENT      1400
-    #define E2_MICROSTEPS    8
+    #define E2_MICROSTEPS    16
     #define E2_RSENSE         0.11
     #define E2_CHAIN_POS     -1
   #endif
@@ -2455,7 +2455,7 @@
    * Define you own with
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
-  #define CHOPPER_TIMING CHOPPER_DEFAULT_12V
+  #define CHOPPER_TIMING CHOPPER_DEFAULT_24V  //Tobbe
 
   /**
    * Monitor Trinamic drivers

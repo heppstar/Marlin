@@ -881,6 +881,8 @@ private:
 
   TERN_(LEANTRONIC, static void M2001()); //Tobbe
 
+  TERN_(LEANTRONIC, static void M2002()); //Tobbe
+
   TERN_(MAX7219_GCODE, static void M7219());
 
   TERN_(CONTROLLER_FAN_EDITABLE, static void M710());

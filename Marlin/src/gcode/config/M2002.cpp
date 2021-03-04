@@ -21,41 +21,26 @@
  */
 
 #include "../gcode.h"
-#include "../../MarlinCore.h" // for startOrResumeJob
+#include "../../module/printcounter.h"
+#include "../../lcd/ultralcd.h"
 
-#include "../../sd/cardreader.h"
-#include "../../inc/MarlinConfig.h"
+#include "../../MarlinCore.h" // for startOrResumeJob
+#include "../../feature/Samples.h"
 
 
 #if ENABLED(LEANTRONIC)
 /*
- * M2001:
+ * M2002:
  */
 
-void GcodeSuite::M2001() {
+void GcodeSuite::M2002() {
 
-  static uint16_t total_samples = 1;
-  static uint16_t count_samples = 0;
+  uint16_t count_samples = 0;
 
-  if (parser.seenval('S')) total_samples = parser.value_int();
-  if (parser.seenval('C')) count_samples = parser.value_int();
-
-  if (count_samples > total_samples) {
-
-      if (IS_SD_PRINTING()){
-        card.flag.abort_sd_printing = true;         //Abort the current SD print job (started with M24)
-        }
-
-      count_samples = 0;
-  }
-
-  if (parser.seen("SC")) {
-      SERIAL_ECHO_START();
-      SERIAL_CHAR("S:");
-      SERIAL_ECHO(total_samples);
-      SERIAL_CHAR(" C:");
-      SERIAL_ECHO(count_samples);
-      SERIAL_EOL();
+  if (parser.seenval('S')) {
+    count_samples = parser.value_int();
+    SERIAL_ECHOPGM("Samples Count: ");
+    SERIAL_ECHO(count_samples);
   }
 
 }
