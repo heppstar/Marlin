@@ -49,14 +49,14 @@ void GcodeSuite::M2001() {
       count_samples = 0;
   }
 
-  if (parser.seen("SC")) {
-      SERIAL_ECHO_START();
-      SERIAL_CHAR("S:");
-      SERIAL_ECHO(total_samples);
-      SERIAL_CHAR(" C:");
-      SERIAL_ECHO(count_samples);
-      SERIAL_EOL();
-  }
+  //if (parser.seen("SC")) {
+      //SERIAL_ECHO_START();
+      //SERIAL_CHAR("S:");
+      //SERIAL_ECHO(total_samples);
+      //SERIAL_CHAR(" C:");
+      //SERIAL_ECHO(count_samples);
+      //SERIAL_EOL();
+  //}
 
 }
 
