@@ -896,7 +896,7 @@ namespace ExtUI {
   bool isMachineHomed() { return all_axes_homed(); }
 
   PGM_P getFirmwareName_str() {
-    static PGMSTR(firmware_name, "Marlin " SHORT_BUILD_VERSION);
+    static PGMSTR(firmware_name, "Leantronic " SHORT_BUILD_VERSION); //Tobbe
     return firmware_name;
   }
 
